@@ -29,8 +29,13 @@ function feeds_tamper_convert_case_form($importer, $element_key, $settings) {
   $form['exclude'] = array(
     '#type' => 'textfield',
     '#title' => t('Words to exclude'),
-    '#default_value' => isset($settings['exclude']) ? $settings['exclude'] : '',
-    '#description' => t('A comma separated list of words that should excluded form conversion.'),
+    '#states' => array(
+      'visible' => array(
+        ':input[name="settings[mode]"]' => array('value' => MB_CASE_TITLE),
+      ),
+    ),    
+    '#default_value' => isset($settings['exclude']) ? $settings['exclude'] : 'to,a,the,of,by,and,with',
+    '#description' => t('A comma separated list of words that should excluded form conversion. You can include words that are all capitals such as \'BBQ\' to avoid being alter to \'Bbq\''),
   );
   return $form;
 }
